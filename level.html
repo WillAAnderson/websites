@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Level — Run the business from one version of the truth</title>
+<style>
+:root {
+  --bg: #fbfaf6;
+  --ink: #14251f;
+  --muted: #5f6d67;
+  --soft: #eef3ec;
+  --line: #dfe6dc;
+  --panel: #ffffff;
+  --green: #3a7a55;
+  --blue: #2f66d0;
+  --dark: #0f2a22;
+  --cream: #f4f1e8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    linear-gradient(rgba(20,37,31,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,37,31,0.035) 1px, transparent 1px),
+    var(--bg);
+  background-size: 56px 56px;
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.page {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  background: rgba(251,250,246,0.88);
+  box-shadow: 0 30px 120px rgba(20,37,31,0.08);
+  border-left: 1px solid rgba(20,37,31,0.07);
+  border-right: 1px solid rgba(20,37,31,0.07);
+}
+
+.nav {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 44px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(251,250,246,0.92);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(16px);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.logo-mark {
+  width: 34px;
+  height: 22px;
+  position: relative;
+  display: inline-block;
+}
+
+.logo-mark span {
+  position: absolute;
+  height: 5px;
+  border-radius: 999px;
+  left: 0;
+  background: #355f3d;
+}
+
+.logo-mark span:nth-child(1) {
+  width: 34px;
+  bottom: 1px;
+  background: #355f3d;
+}
+
+.logo-mark span:nth-child(2) {
+  width: 25px;
+  bottom: 9px;
+  left: 5px;
+  background: #7fa989;
+}
+
+.logo-mark span:nth-child(3) {
+  width: 17px;
+  bottom: 17px;
+  left: 13px;
+  background: #c5d7c7;
+}
+
+.logo-mark span:nth-child(n+4) {
+  display: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.nav-cta {
+  background: var(--dark);
+  color: white;
+  padding: 11px 16px;
+  font-size: 14px;
+  border-radius: 2px;
+}
+
+.hero {
+  padding: 86px 68px 62px;
+  display: grid;
+  grid-template-columns: 0.98fr 1.02fr;
+  gap: 62px;
+  align-items: center;
+}
+
+.kicker {
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(54px, 7vw, 92px);
+  line-height: 0.92;
+  letter-spacing: -0.075em;
+  font-weight: 760;
+}
+
+.hero-copy {
+  margin: 28px 0 0;
+  color: var(--muted);
+  font-size: 20px;
+  line-height: 1.55;
+  max-width: 560px;
+}
+
+.actions {
+  margin-top: 34px;
+  display: flex;
+  gap: 14px;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.primary { background: var(--dark); color: white; }
+.secondary { border: 1px solid var(--line); background: rgba(255,255,255,0.62); }
+
+.truth-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 80px rgba(20,37,31,0.10);
+}
+
+.panel-top {
+  height: 54px;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.panel-body {
+  padding: 26px;
+}
+
+.event-flow {
+  display: grid;
+  gap: 12px;
+}
+
+.flow-item {
+  display: grid;
+  grid-template-columns: 130px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  border: 1px solid #e8ede5;
+  background: #fbfcfa;
+  padding: 16px;
+}
+
+.flow-item strong {
+  font-size: 15px;
+}
+
+.flow-item p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 6px 8px;
+  background: var(--soft);
+  color: var(--green);
+  font-weight: 700;
+}
+
+.sync-line {
+  height: 1px;
+  background: var(--line);
+  margin: 24px 0;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.metric {
+  background: #fff;
+  padding: 17px;
+}
+
+.metric span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+.metric b {
+  font-size: 22px;
+  letter-spacing: -0.04em;
+}
+
+.statement-strip {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 28px 68px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px;
+  background: #f6f4ed;
+}
+
+.statement-strip div {
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 14px;
+}
+
+.statement-strip b {
+  display: block;
+  color: var(--ink);
+  margin-bottom: 7px;
+  font-size: 16px;
+}
+
+.section {
+  padding: 76px 68px;
+}
+
+.section.compact {
+  padding-top: 58px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 0.86fr 1.14fr;
+  gap: 72px;
+  align-items: start;
+}
+
+.label {
+  color: var(--green);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 750;
+}
+
+h2 {
+  margin: 0;
+  font-size: clamp(38px, 5vw, 68px);
+  line-height: 0.96;
+  letter-spacing: -0.07em;
+  font-weight: 740;
+}
+
+.section-copy {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.62;
+  max-width: 670px;
+}
+
+.problem-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.problem-row {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 24px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.problem-row b {
+  font-size: 16px;
+}
+
+.problem-row p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.operating-board {
+  margin-top: 42px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.board-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr 1fr;
+}
+
+.board-column {
+  padding: 22px;
+  border-right: 1px solid var(--line);
+}
+
+.board-column:last-child {
+  border-right: 0;
+}
+
+.board-column h3 {
+  margin: 0 0 18px;
+  font-size: 19px;
+  letter-spacing: -0.035em;
+}
+
+.board-card {
+  border: 1px solid #e8ede5;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #fcfcfa;
+}
+
+.board-card b {
+  font-size: 14px;
+}
+
+.board-card span {
+  display: block;
+  color: var(--muted);
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+.bridge {
+  background: var(--dark);
+  color: white;
+  padding: 86px 68px;
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 62px;
+  align-items: end;
+}
+
+.bridge h2 {
+  color: white;
+}
+
+.bridge p {
+  color: rgba(255,255,255,0.68);
+}
+
+.bridge-list {
+  display: grid;
+  gap: 1px;
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.16);
+}
+
+.bridge-row {
+  background: var(--dark);
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.bridge-row span {
+  color: rgba(255,255,255,0.62);
+}
+
+.bridge-row b {
+  color: var(--green);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--line);
+  margin-top: 36px;
+}
+
+.step {
+  padding: 26px;
+  border-right: 1px solid var(--line);
+  background: rgba(255,255,255,0.55);
+}
+
+.step:last-child {
+  border-right: 0;
+}
+
+.step-number {
+  color: var(--green);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  margin-bottom: 42px;
+  font-weight: 800;
+}
+
+.step h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  letter-spacing: -0.04em;
+}
+
+.step p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.final {
+  padding: 78px 68px 86px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: end;
+}
+
+.final h2 {
+  max-width: 790px;
+}
+
+.final p {
+  margin: 18px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+  font-size: 18px;
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 68px;
+  color: var(--muted);
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 950px) {
+  .page { width: 100%; border: 0; }
+  .nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hero, .two-col, .bridge, .final {
+    grid-template-columns: 1fr;
+  }
+  .hero, .section, .bridge, .final, .statement-strip, .footer {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+  .statement-strip, .board-grid, .steps, .metrics {
+    grid-template-columns: 1fr;
+  }
+  .board-column, .step {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .problem-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+</style>
+</head>
+
+<body>
+  <div class="page">
+    <nav class="nav">
+      <a class="logo" href="#">
+        <span class="logo-mark">
+          <span></span><span></span><span></span>
+        </span>
+        Level
+      </a>
+      <div class="nav-links">
+        <a href="#">Product</a>
+        <a href="#">Operations</a>
+        <a href="#">Finance</a>
+        <a href="#">Customers</a>
+      </div>
+      <a class="nav-cta" href="#">Book a demo</a>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div>
+          <div class="kicker">Finance + operations in sync</div>
+          <h1>Run the business from one version of the truth.</h1>
+          <p class="hero-copy">Level connects finance, operations, and reporting so every workflow, number, and decision reflects the same reality.</p>
+          <div class="actions">
+            <a class="button primary" href="#">Book a demo</a>
+            <a class="button secondary" href="#">See the product</a>
+          </div>
+        </div>
+
+        <div class="truth-panel">
+          <div class="panel-top">
+            <span>Operational event → financial reality</span>
+            <span>Live</span>
+          </div>
+          <div class="panel-body">
+            <div class="event-flow">
+              <div class="flow-item">
+                <strong>Purchase order</strong>
+                <div>
+                  <strong>12 laptops approved</strong>
+                  <p>Requested by Operations. Budget checked automatically.</p>
+                </div>
+                <span class="badge">Approved</span>
+              </div>
+              <div class="flow-item">
+                <strong>Inventory</strong>
+                <div>
+                  <strong>Assets expected Friday</strong>
+                  <p>Receiving workflow created. Owner assigned.</p>
+                </div>
+                <span class="badge">Synced</span>
+              </div>
+              <div class="flow-item">
+                <strong>Finance</strong>
+                <div>
+                  <strong>Spend forecast updated</strong>
+                  <p>Commitment reflected in reporting without manual export.</p>
+                </div>
+                <span class="badge">Current</span>
+              </div>
+            </div>
+
+            <div class="sync-line"></div>
+
+            <div class="metrics">
+              <div class="metric"><span>Open approvals</span><b>18</b></div>
+              <div class="metric"><span>Committed spend</span><b>$284k</b></div>
+              <div class="metric"><span>Reporting status</span><b>Live</b></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="statement-strip">
+        <div><b>When operations change</b> finance should know without a spreadsheet.</div>
+        <div><b>When finance updates</b> reporting should reflect it immediately.</div>
+        <div><b>When leaders ask</b> teams should trust the answer.</div>
+      </section>
+
+      <section class="section">
+        <div class="two-col">
+          <div class="label">The problem</div>
+          <div>
+            <h2>Most systems don’t match reality.</h2>
+            <p class="section-copy">Finance says one thing. Operations says another. Reporting comes later. Teams spend hours reconciling the gaps instead of running the business.</p>
+
+            <div class="problem-list" style="margin-top:34px;">
+              <div class="problem-row">
+                <b>Different numbers</b>
+                <p>Each team works from the tool closest to them, so the business ends up with multiple versions of the truth.</p>
+              </div>
+              <div class="problem-row">
+                <b>Manual handoffs</b>
+                <p>Operational activity gets recreated in finance and then rebuilt again for reporting.</p>
+              </div>
+              <div class="problem-row">
+                <b>Late visibility</b>
+                <p>By the time reporting is clean, the business has already moved.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bridge">
+        <div>
+          <div class="label" style="color:#86c99d;">The shift</div>
+          <h2>Level keeps the business connected as it runs.</h2>
+          <p class="section-copy">The same event updates workflows, controls, financial records, and reporting. Less reconciliation. Fewer surprises. Better decisions.</p>
+        </div>
+
+        <div class="bridge-list">
+          <div class="bridge-row"><span>Duplicate work</span><b>Reduced</b></div>
+          <div class="bridge-row"><span>Disconnected reporting</span><b>Replaced</b></div>
+          <div class="bridge-row"><span>Manual reconciliation</span><b>Cut down</b></div>
+          <div class="bridge-row"><span>Operational visibility</span><b>Improved</b></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="two-col">
+          <div class="label">Product</div>
+          <div>
+            <h2>One system for how the business actually works.</h2>
+            <p class="section-copy">Level brings operational workflows and financial controls into the same place, so every action creates the right downstream record.</p>
+          </div>
+        </div>
+
+        <div class="operating-board">
+          <div class="board-header">
+            <span>Operating workspace</span>
+            <span>Finance + operations + reporting</span>
+          </div>
+          <div class="board-grid">
+            <div class="board-column">
+              <h3>Operations</h3>
+              <div class="board-card"><b>Vendor onboarding</b><span>Legal approved · Finance review next</span></div>
+              <div class="board-card"><b>Inventory receipt</b><span>Warehouse confirmed · assets recorded</span></div>
+              <div class="board-card"><b>Order exception</b><span>Margin impact flagged</span></div>
+            </div>
+            <div class="board-column">
+              <h3>Finance</h3>
+              <div class="board-card"><b>Budget check</b><span>Applied automatically to purchase request</span></div>
+              <div class="board-card"><b>Accrual created</b><span>Linked to received inventory</span></div>
+              <div class="board-card"><b>Forecast updated</b><span>Revenue impact reflected</span></div>
+            </div>
+            <div class="board-column">
+              <h3>Reporting</h3>
+              <div class="board-card"><b>Spend view</b><span>Current to approved commitments</span></div>
+              <div class="board-card"><b>Asset report</b><span>Updated from operational receipt</span></div>
+              <div class="board-card"><b>Leadership dashboard</b><span>Live view, no export required</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section compact">
+        <div class="two-col">
+          <div class="label">How it works</div>
+          <div>
+            <h2>Capture once. Stay aligned. See clearly.</h2>
+            <p class="section-copy">Level turns business activity into trusted financial and operational data without asking teams to rebuild the same context in three places.</p>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">01</div>
+            <h3>Capture once</h3>
+            <p>Data enters where the work happens: approvals, orders, vendors, inventory, or finance.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <h3>Stay connected</h3>
+            <p>Controls, workflows, and records update together from the same underlying activity.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <h3>See clearly</h3>
+            <p>Reporting reflects what is happening now, not what someone reconciled last week.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="final">
+        <div>
+          <h2>One business. One version of the truth.</h2>
+          <p>Modern ERP for teams that need finance, operations, and reporting to move together.</p>
+        </div>
+        <a class="button primary" href="#">Book a demo</a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Level</span>
+      <span>Finance and operations, connected.</span>
+    </footer>
+  </div>
+</body>
+</html>
