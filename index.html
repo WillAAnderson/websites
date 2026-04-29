@@ -14,9 +14,7 @@
   --line: #dcded6;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -57,7 +55,7 @@ h1 {
   text-decoration: none;
   color: inherit;
   transition: all 0.15s ease;
-  min-height: 360px;
+  min-height: 380px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -88,12 +86,28 @@ h1 {
 }
 
 .tag {
-  margin-top: 22px;
+  margin-top: 16px;
   font-size: 12px;
   font-weight: 750;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #4a5a00;
+}
+
+/* NEW CTA */
+.cta {
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s ease;
+}
+
+.card:hover .cta {
+  transform: translateX(4px);
 }
 
 @media (max-width: 780px) {
@@ -122,10 +136,12 @@ h1 {
           <h2>Level</h2>
           <p class="lead">Make your business make sense.</p>
           <p>One system where every number, workflow, and decision lines up. No gaps. No drift. Just clarity.</p>
-          <p>Most companies don’t have a system of record — they have fragments. Operations in one place. Finance in another. Reporting rebuilt after the fact.</p>
           <p>Level brings everything into alignment so you can see what’s happening and trust it.</p>
         </div>
-        <div class="tag">Clarity / alignment</div>
+        <div>
+          <div class="tag">Clarity / alignment</div>
+          <div class="cta">View concept →</div>
+        </div>
       </a>
 
       <a class="card" href="frame.html">
@@ -133,10 +149,12 @@ h1 {
           <h2>Frame</h2>
           <p class="lead">ERP that actually fits your business.</p>
           <p>Structure where you need it. Flexibility where you don’t. Stop working around your system.</p>
-          <p>Most ERP systems start rigid and get worse over time. The business changes. The system doesn’t. So teams work around it.</p>
           <p>Frame gives you structure that adapts — workflows, approvals, and reporting that evolve with the business.</p>
         </div>
-        <div class="tag">Fit / structure without rigidity</div>
+        <div>
+          <div class="tag">Fit / structure without rigidity</div>
+          <div class="cta">View concept →</div>
+        </div>
       </a>
 
       <a class="card" href="brightweave.html">
@@ -144,10 +162,12 @@ h1 {
           <h2>BrightWeave</h2>
           <p class="lead">Your system shouldn’t swallow work.</p>
           <p>Most ERP systems absorb time, effort, and data — and give very little back.</p>
-          <p>BrightWeave is built to return value. Every action flows forward into decisions, reporting, and outcomes.</p>
-          <p>Work goes in. Clarity comes out. That’s how the system should behave.</p>
+          <p>BrightWeave is built to return value. Work goes in. Clarity comes out.</p>
         </div>
-        <div class="tag">Output / value returned</div>
+        <div>
+          <div class="tag">Output / value returned</div>
+          <div class="cta">View concept →</div>
+        </div>
       </a>
 
       <a class="card" href="authentic.html">
@@ -155,10 +175,12 @@ h1 {
           <h2>Authentic</h2>
           <p class="lead">Confidence shouldn’t require reconciliation.</p>
           <p>Most companies spend more time verifying outputs than acting on them.</p>
-          <p>Authentic makes every result explainable and verifiable, so decisions happen faster — and with less risk.</p>
-          <p>No ambiguity. No hidden logic. Just a system you can rely on.</p>
+          <p>Authentic makes every result explainable and verifiable.</p>
         </div>
-        <div class="tag">Trust / verification</div>
+        <div>
+          <div class="tag">Trust / verification</div>
+          <div class="cta">View concept →</div>
+        </div>
       </a>
 
     </div>
